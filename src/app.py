@@ -64,6 +64,14 @@ def delete_member(member_id):
     else: 
         return jsonify({"mensaje: " :"ID no encontrado"}), 400
 
+@app.route('/member/<int:member_id>', methods=['PUT'])
+def update_member(member_id):
+    body = request.get_json()
+    member = jackson_family.update_member(member_id, body)
+    if member:
+        return jsonify(member), 203
+    else: return jsonify({"mensaje:": "solicitud incorrecta"})    
+
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))

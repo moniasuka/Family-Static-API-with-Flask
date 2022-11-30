@@ -60,3 +60,12 @@ class FamilyStructure:
     # this method is done, it returns a list with all the family members
     def get_all_members(self):
         return self._members
+
+
+    # actualizar miembro de la familia
+    def update_member(self, id, member):
+        for position in range(len(self._members)):
+            if self._members[position]['id'] == int(id):
+                self._members[position].update(member)
+                return {"done": "Miembro actualizado"}
+        return None
