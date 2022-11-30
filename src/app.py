@@ -34,9 +34,25 @@ def handle_hello():
         "hello": "world",
         "family": members
     }
-
-
     return jsonify(response_body), 200
+
+@app.route('/member/<int:member_id>', methods=['GET'])
+def get_member(member_id):
+    print(member_id)
+    member = jackson_family.get_member(member_id)
+    if member:
+        return jsonify(member), 200 
+    else: 
+        return jsonify({"mensaje: " :"ID no encontrado"}), 400
+
+@app.route('/member', methods=['POST'])
+def add_member():
+    body = request.get_json()
+    if isinstance(body, dict):
+        jackson_family.add_member(body)
+        return jsonify({"mensaje:": "Miembro agregado exitosamente"}), 200
+    else: 
+        return jsonify({"mensaje:":"solicitud incorrecta"}), 400
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
